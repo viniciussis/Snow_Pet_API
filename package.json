@@ -1,13 +1,18 @@
 {
   "name": "snow_pet_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "O Snow Pet API é o back-end de um sistema desenvolvido como parte de um projeto acadêmico para gerenciar as operações de um pet shop.",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "node",
+    "express",
+    "snow_pet_api",
+    "mongoose"
+  ],
+  "author": "Vinícius Silva Santos",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
-async function main () {
+async function dbConnection() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/')
-    console.log('Connected to Database!')
+    await mongoose.connect('mongodb+srv://devinicius:Dorythos%40561@maincluster.9m6fqz6.mongodb.net/snow_pet')
+    console.log('Connected to Database!')    
   } catch (error) {
-    console.log(error)
+    console.log("Error: ", error)    
   }
 }
 
-module.exports = main
+module.exports = dbConnection
