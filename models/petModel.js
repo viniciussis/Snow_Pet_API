@@ -8,7 +8,7 @@ const petSchema = new Schema({
     required: true
   },
   owner_id: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Customer',
     required: true
   },
@@ -56,11 +56,8 @@ const petSchema = new Schema({
     type: String,
     default: 'Nenhuma'
   }
-}, { timestamps: true })
+}, { timestamps: true, versionKey: false })
 
 const Pet = mongoose.model('Pet', petSchema)
 
-module.exports = {
-  Pet,
-  petSchema
-}
+module.exports = Pet

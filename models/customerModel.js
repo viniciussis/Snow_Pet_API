@@ -39,11 +39,8 @@ const customerSchema = new Schema({
     type: String,
     default: 'Nenhuma'
   }
-}, { timestamps: true })
+}, { timestamps: true, versionKey: false })
 
 const Customer = mongoose.model('Customer', customerSchema)
 
-module.exports = {
-  Customer,
-  customerSchema
-}
+module.exports = Customer

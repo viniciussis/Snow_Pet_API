@@ -1,4 +1,4 @@
-const { Customer } = require('../models/customerModel')
+const Customer = require('../models/customerModel')
 
 class CustomerController {
 

@@ -1,4 +1,4 @@
-const { Pet } = require('../models/petModel')
+const Pet = require('../models/petModel')
 
 class PetController {
   
