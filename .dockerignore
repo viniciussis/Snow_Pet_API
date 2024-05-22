@@ -1,5 +1,23 @@
+# Ignorar diretórios de dependências
 node_modules
 npm-debug.log
+yarn-error.log
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos de configuração de ambiente
+.env
+
+# Ignorar diretórios de testes
+test
+__tests__
+
+# Ignorar arquivos de configuração do Docker
 Dockerfile
-.dockerignore
 docker-compose.yml
+.dockerignore
+
+# Ignorar arquivos de controle de versão
+.git
+.gitignore

@@ -1,19 +1,15 @@
-FROM node:14
+FROM node:lts-alpine
 
-# Defina o diretório de trabalho dentro do contêiner
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copie o package.json e o package-lock.json
-COPY package*.json ./
+COPY . /app
 
-# Instale as dependências
 RUN npm install
 
-# Copie o restante do código da aplicação
-COPY . .
+ARG PORT_BUILD=3000
+ENV PORT=$PORT_BUILD
+ENV DB_CONNECTION_KEY=mongodb+srv://devinicius:Dorythos%40561@maincluster.9m6fqz6.mongodb.net/snow_pet
 
-# Exponha a porta que a aplicação irá rodar
-EXPOSE 3000
+EXPOSE $PORT_BUILD
 
-# Comando para iniciar a aplicação
-CMD ["node", "src/app.js"]
+CMD [ "npm", "start" ]
