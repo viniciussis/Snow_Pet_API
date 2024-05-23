@@ -17,8 +17,7 @@ const customerSchema = new Schema({
       required: true
     },
     number: {
-      type: Number,
-      min: 1,
+      type: String,
       required: true
     },
     complement: {

@@ -32,8 +32,7 @@ const employeeSchema = new Schema({
       required: true
     },
     number: {
-      type: Number,
-      min: 1,
+      type: String,
       required: true
     },
     complement: {
@@ -57,7 +56,7 @@ const employeeSchema = new Schema({
     type: String,
     required: true
   }
-}, { timestamps: true , versionKey: false })
+}, { timestamps: true, versionKey: false })
 
 const Employee = mongoose.model('Employee', employeeSchema)
 
