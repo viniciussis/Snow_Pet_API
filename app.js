@@ -4,6 +4,8 @@ const app = express()
 const routes = require('./routes/routes')
 const conn = require('./db/conn')
 
+require('dotenv').config()
+
 app.use(cors())
 app.use(express.json())
 app.use('/api', routes)
