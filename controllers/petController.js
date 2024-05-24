@@ -5,7 +5,7 @@ class PetController {
   static async getAllPets(req, res) {
     try {
       const petsList = await Pet.find({})
-      res.status(200).json({petList: petsList})
+      res.status(200).json(petsList)
     } catch (error) {
       res.status(404).json({message: error.message})
     }
