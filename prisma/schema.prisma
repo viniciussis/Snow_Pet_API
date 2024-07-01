@@ -1,0 +1,120 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String?
+  phoneNumber String?
+  socialMedia String?
+  address     Address   @relation(fields: [addressId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  addressId   String    @unique @db.ObjectId
+  pets        Pet[]
+  services    Service[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Address {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  neighborhood String
+  street       String
+  houseNumber  String
+  complement   String?
+  customer     Customer?
+}
+
+model Pet {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  specie         String
+  breed          String
+  size           String
+  gender         String
+  healthProblems String?
+  allergies      String?
+  additionalInfo String?
+  combo          Boolean    @default(false)
+  owner          Customer   @relation(fields: [ownerId], references: [id])
+  ownerId        String     @db.ObjectId
+  groomings      Grooming[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Service {
+  id         String        @id @default(auto()) @map("_id") @db.ObjectId
+  totalValue Float
+  date       DateTime      @default(now())
+  customer   Customer      @relation(fields: [customerId], references: [id])
+  customerId String        @db.ObjectId
+  items      ItemService[]
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+}
+
+model ItemService {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  type       String
+  quantity   Int       @default(1)
+  price      Float
+  service    Service   @relation(fields: [serviceId], references: [id])
+  serviceId  String    @db.ObjectId
+  grooming   Grooming? @relation(fields: [groomingId], references: [id])
+  groomingId String?   @unique @db.ObjectId
+  product    Product?  @relation(fields: [productId], references: [id])
+  productId  String?   @unique @db.ObjectId
+}
+
+model Grooming {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  type        String
+  price       Float
+  date        DateTime     @default(now())
+  pet         Pet          @relation(fields: [petId], references: [id])
+  petId       String       @db.ObjectId
+  itemService ItemService?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Product {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  brand       String
+  description String?
+  price       Float
+  measure     String
+  stock       Stock?
+  itemService ItemService?
+  category    Category?    @relation(fields: [categotyId], references: [id])
+  categotyId  String?      @db.ObjectId
+}
+
+model Stock {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  quantity  Int      @default(0)
+  date      DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String   @unique @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  products Product[]
+}
