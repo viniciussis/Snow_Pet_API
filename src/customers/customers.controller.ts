@@ -8,14 +8,13 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CustomersService } from './customers.service';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { Prisma } from '@prisma/client';
 
 @ApiTags('Customers')
 @Controller('v1/customers')
@@ -38,7 +37,7 @@ export class CustomersController {
 
   @Post()
   @ApiCreatedResponse({ description: 'Customer created successfully...' })
-  async createCustomer(@Body() customerData: CreateCustomerDto) {
+  async createCustomer(@Body() customerData: Prisma.CustomerCreateInput) {
     const newCustomer = await this.customersService.saveCustomer(customerData);
     return newCustomer;
   }
@@ -47,15 +46,15 @@ export class CustomersController {
   @ApiOkResponse({ description: 'Customer created successfully...' })
   async updateCustomer(
     @Param('id') id: string,
-    @Body() dataToUpdate: UpdateCustomerDto,
+    @Body() dataToUpdate: Prisma.CustomerUpdateInput,
   ) {
     const customerUpdated = await this.customersService.updateCustomer(
       id,
       dataToUpdate,
     );
     return {
-      updated: customerUpdated,
       message: 'Customer successfully updated...',
+      customer: customerUpdated,
     };
   }
 
@@ -65,8 +64,8 @@ export class CustomersController {
     const customerDeleted = await this.customersService.removeCustomer(id);
 
     return {
-      deleted: customerDeleted,
       message: 'Customer deleted successfully...',
+      customer: customerDeleted,
     };
   }
 }

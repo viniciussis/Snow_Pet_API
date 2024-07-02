@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class CustomersService {
@@ -30,22 +29,9 @@ export class CustomersService {
     });
   }
 
-  async saveCustomer(customerData: CreateCustomerDto) {
+  async saveCustomer(customerData: Prisma.CustomerCreateInput) {
     const newCustomer = await this.prisma.customer.create({
-      data: {
-        name: customerData.name,
-        phoneNumber: customerData.phoneNumber,
-        email: customerData.email,
-        socialMedia: customerData.socialMedia,
-        address: {
-          create: {
-            houseNumber: customerData.houseNumber,
-            neighborhood: customerData.neighborhood,
-            street: customerData.street,
-            complement: customerData.complement,
-          },
-        },
-      },
+      data: customerData,
       include: {
         address: true,
       },
@@ -54,10 +40,10 @@ export class CustomersService {
     return newCustomer;
   }
 
-  async updateCustomer(id: string, dataToUpdate: UpdateCustomerDto) {
+  async updateCustomer(id: string, dataToUpdate: Prisma.CustomerUpdateInput) {
     return await this.prisma.customer.update({
       where: {
-        id: id,
+        id,
       },
       data: dataToUpdate,
     });
@@ -66,7 +52,7 @@ export class CustomersService {
   async removeCustomer(id: string) {
     return await this.prisma.customer.delete({
       where: {
-        id: id,
+        id,
       },
       include: {
         address: true,
