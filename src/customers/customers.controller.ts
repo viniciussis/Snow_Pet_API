@@ -37,7 +37,12 @@ export class CustomersController {
 
   @Post()
   @ApiCreatedResponse({ description: 'Customer created successfully...' })
-  async createCustomer(@Body() customerData: Prisma.CustomerCreateInput) {
+  async createCustomer(
+    @Body()
+    customerData: Omit<Prisma.CustomerCreateInput, 'address'> & {
+      address: Prisma.AddressCreateWithoutCustomerInput;
+    },
+  ) {
     const newCustomer = await this.customersService.saveCustomer(customerData);
     return newCustomer;
   }
@@ -46,7 +51,10 @@ export class CustomersController {
   @ApiOkResponse({ description: 'Customer created successfully...' })
   async updateCustomer(
     @Param('id') id: string,
-    @Body() dataToUpdate: Prisma.CustomerUpdateInput,
+    @Body()
+    dataToUpdate: Omit<Prisma.CustomerUpdateInput, 'address'> & {
+      address: Prisma.AddressUpdateWithoutCustomerInput;
+    },
   ) {
     const customerUpdated = await this.customersService.updateCustomer(
       id,

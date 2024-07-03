@@ -29,9 +29,18 @@ export class CustomersService {
     });
   }
 
-  async saveCustomer(customerData: Prisma.CustomerCreateInput) {
+  async saveCustomer(
+    customerData: Omit<Prisma.CustomerCreateInput, 'address'> & {
+      address: Prisma.AddressCreateWithoutCustomerInput;
+    },
+  ) {
     const newCustomer = await this.prisma.customer.create({
-      data: customerData,
+      data: {
+        ...customerData,
+        address: {
+          create: customerData.address,
+        },
+      },
       include: {
         address: true,
       },
@@ -40,12 +49,25 @@ export class CustomersService {
     return newCustomer;
   }
 
-  async updateCustomer(id: string, dataToUpdate: Prisma.CustomerUpdateInput) {
+  async updateCustomer(
+    id: string,
+    dataToUpdate: Omit<Prisma.CustomerUpdateInput, 'address'> & {
+      address: Prisma.AddressUpdateWithoutCustomerInput;
+    },
+  ) {
+    const { updatedAt, createdAt, services, pets, address, ...dataWithoutIds } =
+      dataToUpdate;
+
     return await this.prisma.customer.update({
       where: {
         id,
       },
-      data: dataToUpdate,
+      data: {
+        ...dataWithoutIds,
+        address: {
+          update: address,
+        },
+      },
     });
   }
 
