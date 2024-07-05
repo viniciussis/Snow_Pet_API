@@ -1,7 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { UpdateProductDto } from './dtos/update-product.dto';
+import { CreateProductDto } from './dtos/create-product.dto';
 
 @ApiTags('Products')
 @Controller('v1/products')
@@ -24,7 +39,11 @@ export class ProductsController {
 
   @Post()
   @ApiCreatedResponse({ description: 'Product created successfully...' })
-  async createProduct(@Body() productData: Prisma.ProductCreateInput) {
+  async createProduct(
+    @Body()
+    productData: CreateProductDto,
+  ) {
+    console.log(productData);
     const newProduct = await this.productsService.saveProduct(productData);
     return newProduct;
   }
@@ -33,7 +52,8 @@ export class ProductsController {
   @ApiOkResponse({ description: 'Product created successfully...' })
   async updateProduct(
     @Param('id') id: string,
-    @Body() dataToUpdate: Prisma.ProductUpdateInput,
+    @Body()
+    dataToUpdate: UpdateProductDto,
   ) {
     const productUpdated = await this.productsService.updateProduct(
       id,

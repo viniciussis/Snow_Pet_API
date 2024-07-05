@@ -55,7 +55,7 @@ export class CustomersService {
       address: Prisma.AddressUpdateWithoutCustomerInput;
     },
   ) {
-    const { updatedAt, createdAt, services, pets, address, ...dataWithoutIds } =
+    const { address, ...data } =
       dataToUpdate;
 
     return await this.prisma.customer.update({
@@ -63,7 +63,7 @@ export class CustomersService {
         id,
       },
       data: {
-        ...dataWithoutIds,
+        ...data,
         address: {
           update: address,
         },

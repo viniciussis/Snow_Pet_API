@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { GroomingsService } from './groomings.service';
 import { ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { UpdateGroomingDto } from './dtos/create-grooming.dto';
 
 @ApiTags('Groomings')
 @Controller('v1/groomings')
@@ -33,7 +34,7 @@ export class GroomingsController {
   @ApiOkResponse({ description: 'Grooming created successfully...' })
   async updateGrooming(
     @Param('id') id: string,
-    @Body() dataToUpdate: Prisma.GroomingUpdateInput,
+    @Body() dataToUpdate: UpdateGroomingDto,
   ) {
     const groomingUpdated = await this.groomingsService.updateGrooming(
       id,

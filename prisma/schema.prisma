@@ -99,8 +99,8 @@ model Product {
   measure     String
   stock       Stock?
   itemService ItemService?
-  category    Category?    @relation(fields: [categotyId], references: [id])
-  categotyId  String?      @db.ObjectId
+  category    Category     @relation(fields: [categoryId], references: [id])
+  categoryId  String       @db.ObjectId
 }
 
 model Stock {

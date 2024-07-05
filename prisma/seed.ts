@@ -25,10 +25,10 @@ async function main() {
         create: {
           id: '6682c60e3a7ef7b5e85f3a28',
           breed: 'Pincher',
-          gender: 'Male',
+          gender: 'Macho',
           name: 'Rasta',
-          size: 'Big',
-          specie: 'Dog',
+          size: 'Grande',
+          specie: 'Cachorro',
         },
       },
       socialMedia: '@junin',
@@ -57,10 +57,10 @@ async function main() {
         create: {
           id: '6682ee82200982707c4594ef',
           breed: 'Pastor',
-          gender: 'Male',
+          gender: 'Macho',
           name: 'Bet',
-          size: 'pequeno',
-          specie: 'Dog',
+          size: 'Pequeno',
+          specie: 'Cachorro',
           allergies: 'Arroz',
           additionalInfo: 'Odeia bolo',
           healthProblems: 'Asma',
@@ -93,8 +93,8 @@ async function main() {
           breed: 'Labrador',
           gender: 'Fêmea',
           name: 'Lis',
-          size: 'médio',
-          specie: 'Dog',
+          size: 'Médio',
+          specie: 'Cachorro',
           additionalInfo: 'Odeia água',
         },
       },
@@ -146,6 +146,7 @@ async function main() {
       measure: '250g',
       name: 'Shampoo pet',
       price: 50,
+      description: 'Bem xeiroso',
       stock: {
         create: {
           quantity: 25,
@@ -168,8 +169,9 @@ async function main() {
       id: '6682d90243fe59416b29403b',
       brand: 'Whiska',
       measure: '500g',
-      name: 'ração',
+      name: 'Ração Whiska',
       price: 75,
+      description: 'Comível',
       stock: {
         create: {
           quantity: 80,
@@ -177,6 +179,7 @@ async function main() {
       },
       category: {
         create: {
+          id: '6686ae4c34b05428c5198887',
           name: 'comida',
         },
       },
@@ -192,7 +195,8 @@ async function main() {
       id: '6682ec92bb47312baa9a01d6',
       brand: 'Pedigree',
       measure: '1kg',
-      name: 'ração pedigree',
+      name: 'Ração Pedigree',
+      description: 'Muito bom',
       price: 25,
       stock: {
         create: {
@@ -200,8 +204,8 @@ async function main() {
         },
       },
       category: {
-        create: {
-          name: 'comida',
+        connect: {
+          id: '6686ae4c34b05428c5198887',
         },
       },
     },

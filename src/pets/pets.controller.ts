@@ -15,6 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { UpdatePetDto } from './dtos/update-pet.dto';
 
 @ApiTags('Pets')
 @Controller('v1/pets')
@@ -46,7 +47,7 @@ export class PetsController {
   @ApiOkResponse({ description: 'Pet created successfully...' })
   async updatePet(
     @Param('id') id: string,
-    @Body() dataToUpdate: Prisma.PetUpdateInput,
+    @Body() dataToUpdate: UpdatePetDto,
   ) {
     const petUpdated = await this.petsService.updatePet(id, dataToUpdate);
     return {

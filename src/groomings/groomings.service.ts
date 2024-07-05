@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdateGroomingDto } from './dtos/create-grooming.dto';
 
 @Injectable()
 export class GroomingsService {
@@ -30,7 +31,7 @@ export class GroomingsService {
     return newGrooming;
   }
 
-  async updateGrooming(id: string, dataToUpdate: Prisma.GroomingUpdateInput) {
+  async updateGrooming(id: string, dataToUpdate: UpdateGroomingDto) {
     return await this.prisma.grooming.update({
       where: {
         id,
