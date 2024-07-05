@@ -142,7 +142,7 @@ async function main() {
     update: {},
     create: {
       id: '6682d85c036beab771114da5',
-      brand: 'pets',
+      brand: 'Pets',
       measure: '250g',
       name: 'Shampoo pet',
       price: 50,
@@ -213,11 +213,11 @@ async function main() {
 
   const service1 = await prisma.service.upsert({
     where: {
-      id: '6682efba7d971c9e16dae198',
+      id: '6687ecadfb742ab296412b41',
     },
     update: {},
     create: {
-      id: '6682efba7d971c9e16dae198',
+      id: '6687ecadfb742ab296412b41',
       totalValue: 225,
       customer: {
         connect: {

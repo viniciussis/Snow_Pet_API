@@ -73,34 +73,34 @@ model ItemService {
   service    Service   @relation(fields: [serviceId], references: [id])
   serviceId  String    @db.ObjectId
   grooming   Grooming? @relation(fields: [groomingId], references: [id])
-  groomingId String?   @unique @db.ObjectId
+  groomingId String?   @db.ObjectId
   product    Product?  @relation(fields: [productId], references: [id])
-  productId  String?   @unique @db.ObjectId
+  productId  String?   @db.ObjectId
 }
 
 model Grooming {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
   type        String
   price       Float
-  date        DateTime     @default(now())
-  pet         Pet          @relation(fields: [petId], references: [id])
-  petId       String       @db.ObjectId
-  itemService ItemService?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  date        DateTime      @default(now())
+  pet         Pet           @relation(fields: [petId], references: [id])
+  petId       String        @db.ObjectId
+  itemService ItemService[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
 model Product {
-  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   brand       String
   description String?
   price       Float
   measure     String
   stock       Stock?
-  itemService ItemService?
-  category    Category     @relation(fields: [categoryId], references: [id])
-  categoryId  String       @db.ObjectId
+  itemService ItemService[]
+  category    Category      @relation(fields: [categoryId], references: [id])
+  categoryId  String        @db.ObjectId
 }
 
 model Stock {
