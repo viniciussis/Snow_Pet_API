@@ -154,7 +154,7 @@ async function main() {
       },
       category: {
         create: {
-          name: 'comesticos',
+          label: 'comesticos',
         },
       },
     },
@@ -180,7 +180,7 @@ async function main() {
       category: {
         create: {
           id: '6686ae4c34b05428c5198887',
-          name: 'comida',
+          label: 'comida',
         },
       },
     },
