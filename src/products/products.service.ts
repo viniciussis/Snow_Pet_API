@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
@@ -25,7 +24,6 @@ export class ProductsService {
   }
 
   async saveProduct(productData: CreateProductDto) {
-    console.log(productData);
     const newProduct = await this.prisma.product.create({
       data: {
         ...productData,
@@ -41,7 +39,6 @@ export class ProductsService {
   }
 
   async updateProduct(id: string, dataToUpdate: UpdateProductDto) {
-    console.log(dataToUpdate);
     return await this.prisma.product.update({
       where: {
         id,
