@@ -1,7 +1,7 @@
+import { PrismaService } from 'src/plugins/database/services/database.service';
+import { UpdateGroomingDto } from './dtos/create-grooming.dto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { UpdateGroomingDto } from './dtos/create-grooming.dto';
 
 @Injectable()
 export class GroomingsService {

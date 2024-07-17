@@ -1,5 +1,5 @@
+import { PrismaService } from 'src/plugins/database/services/database.service';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
@@ -55,8 +55,7 @@ export class CustomersService {
       address: Prisma.AddressUpdateWithoutCustomerInput;
     },
   ) {
-    const { address, ...data } =
-      dataToUpdate;
+    const { address, ...data } = dataToUpdate;
 
     return await this.prisma.customer.update({
       where: {

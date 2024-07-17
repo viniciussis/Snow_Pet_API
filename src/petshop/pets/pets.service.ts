@@ -1,7 +1,7 @@
+import { PrismaService } from 'src/plugins/database/services/database.service';
+import { UpdatePetDto } from './dtos/update-pet.dto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { UpdatePetDto } from './dtos/update-pet.dto';
 
 @Injectable()
 export class PetsService {

@@ -1,11 +1,11 @@
-import { CategoriesModule } from './categories/categories.module';
-import { CustomersModule } from './customers/customers.module';
-import { GroomingsModule } from './groomings/groomings.module';
-import { ProductsModule } from './products/products.module';
-import { ServicesModule } from './services/services.module';
-import { PrismaModule } from './prisma/prisma.module';
-import { StockModule } from './stock/stock.module';
-import { PetsModule } from './pets/pets.module';
+import { CategoriesModule } from './petshop/categories/categories.module';
+import { CustomersModule } from './petshop/customers/customers.module';
+import { GroomingsModule } from './petshop/groomings/groomings.module';
+import { ServicesModule } from './petshop/services/services.module';
+import { ProductsModule } from './petshop/products/products.module';
+import { PrismaModule } from './plugins/database/database.module';
+import { StockModule } from './petshop/stock/stock.module';
+import { PetsModule } from './petshop/pets/pets.module';
 import { Module } from '@nestjs/common';
 
 @Module({
