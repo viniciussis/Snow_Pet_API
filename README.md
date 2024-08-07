@@ -1,11 +1,8 @@
+# Snow Pet API
 
----
+A **Snow Pet API** é uma API desenvolvida em NestJS para gerenciar as operações de um pet shop, incluindo serviços de banho e tosa e a venda de produtos para pets. A API utiliza Prisma como ORM e o banco de dados MongoDB hospedado no MongoDB Atlas.
 
-# Snow Pet Shop API
-
-## Descrição
-
-A **Snow Pet Shop API** é uma API desenvolvida em NestJS para gerenciar as operações de um pet shop, incluindo serviços de banho e tosa e a venda de produtos para pets. A API utiliza Prisma como ORM e o banco de dados MongoDB hospedado no MongoDB Atlas.
+![Imagem da API](public/screenshot.png)
 
 ## Tecnologias Utilizadas
 
@@ -19,22 +16,35 @@ A **Snow Pet Shop API** é uma API desenvolvida em NestJS para gerenciar as oper
 - Gerenciamento de pets.
 - Gerenciamento de clientes.
 - Controle de estoque de produtos.
-- Registro de vendas e serviços de banho e tosa.
-- Métricas, relatórios e controle de caixa.
+- Registro de vendas de produtos e serviços de banho e tosa.
+- Métricas e relatórios.
 
 ## Documentação da API
 
 A documentação completa da API está disponível na rota: [http://localhost:3000/api](http://localhost:3000/api)
 
+## Pré-requisitos
+
+Antes de rodar o projeto, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+
+- [Node.js](https://nodejs.org/en/download/)
+- npm (geralmente vem com o Node.js) ou [Yarn](https://classic.yarnpkg.com/en/docs/install/)
+- [Nest CLI](https://docs.nestjs.com/cli/overview)
+  ```bash
+  npm install -g @nestjs/cli
+  ```
+
 ## Instalação
 
 1. **Clone o repositório:**
+
    ```bash
-   git clone https://github.com/seu-usuario/snow-pet-shop-api.git
-   cd snow-pet-shop-api
+   git clone https://github.com/viniciussis/Snow_Pet_API.git
+   cd Snow_Pet_API
    ```
 
 2. **Instale as dependências:**
+
    ```bash
    npm install
    # ou
@@ -43,16 +53,24 @@ A documentação completa da API está disponível na rota: [http://localhost:30
 
 3. **Configure as variáveis de ambiente:**
    Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis de ambiente:
+
    ```env
    DATABASE_URL="mongodb+srv://<usuário>:<senha>@cluster0.mongodb.net/<nome-do-banco>?retryWrites=true&w=majority"
    ```
 
 4. **Rode as migrações do Prisma:**
+
    ```bash
-   npx prisma migrate deploy
+   npx prisma migrate dev
    ```
 
-5. **Inicie o servidor de desenvolvimento:**
+5. **Popule o banco de dados com dados iniciais (seed):**
+
+   ```bash
+   npx prisma db seed
+   ```
+
+6. **Inicie o servidor de desenvolvimento:**
    ```bash
    npm run start:dev
    # ou
@@ -76,7 +94,3 @@ Se você deseja contribuir com o projeto, siga os passos abaixo:
 ## Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
-
----
-
-Espero que isso atenda às suas necessidades! Se precisar de alguma informação adicional ou ajustes, sinta-se à vontade para pedir.
