@@ -19,6 +19,10 @@ A **Snow Pet API** é uma API desenvolvida em NestJS para gerenciar as operaçõ
 - Registro de vendas de produtos e serviços de banho e tosa.
 - Métricas e relatórios.
 
+## Front-End
+
+- [Snow Pet Shop](github.com/viniciussis/snow_pet)
+
 ## Documentação da API
 
 A documentação completa da API está disponível na rota: [http://localhost:3000/api](http://localhost:3000/api)
