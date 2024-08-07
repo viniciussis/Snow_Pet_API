@@ -15,6 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
+import { UpdateStockDto } from './dtos/update-stock.dto';
 
 @ApiTags('Stock')
 @Controller('v1/stock')
@@ -40,7 +41,7 @@ export class StockController {
   async updateStock(
     @Param('id') id: string,
     @Body()
-    dataToUpdate: Prisma.StockUpdateInput,
+    dataToUpdate: UpdateStockDto,
   ) {
     const stockProductUpdated = await this.stockService.updateStock(
       id,

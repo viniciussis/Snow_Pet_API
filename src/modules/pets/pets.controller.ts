@@ -45,10 +45,7 @@ export class PetsController {
 
   @Patch('/:id')
   @ApiOkResponse({ description: 'Pet created successfully...' })
-  async updatePet(
-    @Param('id') id: string,
-    @Body() dataToUpdate: UpdatePetDto,
-  ) {
+  async updatePet(@Param('id') id: string, @Body() dataToUpdate: UpdatePetDto) {
     const petUpdated = await this.petsService.updatePet(id, dataToUpdate);
     return {
       message: 'Pet successfully updated...',

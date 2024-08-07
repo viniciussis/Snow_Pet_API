@@ -1,6 +1,7 @@
 import { PrismaService } from 'src/plugins/database/services/database.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { UpdateStockDto } from './dtos/update-stock.dto';
 
 @Injectable()
 export class StockService {
@@ -29,7 +30,7 @@ export class StockService {
     });
   }
 
-  async updateStock(id: string, dataToUpdate: Prisma.StockUpdateInput) {
+  async updateStock(id: string, dataToUpdate: UpdateStockDto) {
     return await this.prisma.stock.update({
       where: {
         id,

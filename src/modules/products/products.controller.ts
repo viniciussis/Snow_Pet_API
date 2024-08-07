@@ -3,20 +3,19 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Patch,
 } from '@nestjs/common';
-import { ProductsService } from './products.service';
 import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Prisma } from '@prisma/client';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
+import { ProductsService } from './products.service';
 
 @ApiTags('Products')
 @Controller('v1/products')
@@ -43,7 +42,6 @@ export class ProductsController {
     @Body()
     productData: CreateProductDto,
   ) {
-    console.log(productData);
     const newProduct = await this.productsService.saveProduct(productData);
     return newProduct;
   }

@@ -7,15 +7,17 @@ export class CategoriesService {
   constructor(private prisma: PrismaService) {}
 
   async getCategoryById(id: string) {
-    const foundCategory = await this.prisma.category.findUnique({
-      where: { id },
+    const category = await this.prisma.category.findUnique({
+      where: {
+        id: id,
+      },
     });
 
-    if (!foundCategory) {
-      throw new Error('Category not found!');
+    if (!category) {
+      throw new Error(`Category not found! ID: ${id}`);
     }
 
-    return foundCategory;
+    return category;
   }
 
   async getAllCategories() {
