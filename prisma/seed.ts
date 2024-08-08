@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PetGender, PetSize, PetSpecie, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -25,10 +25,10 @@ async function main() {
         create: {
           id: '6682c60e3a7ef7b5e85f3a28',
           breed: 'Pincher',
-          gender: 'Macho',
-          name: 'Rasta',
-          size: 'Grande',
-          specie: 'Cachorro',
+          gender: PetGender.MACHO,
+          name: 'Link',
+          size: PetSize.GRANDE,
+          specie: PetSpecie.CACHORRO,
         },
       },
       socialMedia: '@junin',
@@ -57,10 +57,10 @@ async function main() {
         create: {
           id: '6682ee82200982707c4594ef',
           breed: 'Pastor',
-          gender: 'Macho',
+          gender: PetGender.MACHO,
           name: 'Bet',
-          size: 'Pequeno',
-          specie: 'Cachorro',
+          size: PetSize.PEQUENO,
+          specie: PetSpecie.CACHORRO,
           allergies: 'Arroz',
           additionalInfo: 'Odeia bolo',
           healthProblems: 'Asma',
@@ -91,10 +91,10 @@ async function main() {
         create: {
           id: '6682ef0de28f346e43e03fad',
           breed: 'Labrador',
-          gender: 'Fêmea',
+          gender: PetGender.FEMEA,
           name: 'Lis',
-          size: 'Médio',
-          specie: 'Cachorro',
+          size: PetSize.MEDIO,
+          specie: PetSpecie.GATO,
           additionalInfo: 'Odeia água',
         },
       },
@@ -294,3 +294,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+

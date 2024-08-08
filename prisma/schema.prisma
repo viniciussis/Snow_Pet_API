@@ -39,10 +39,10 @@ model Address {
 model Pet {
   id             String     @id @default(auto()) @map("_id") @db.ObjectId
   name           String
-  specie         String
+  specie         PetSpecie
   breed          String
-  size           String
-  gender         String
+  size           PetSize
+  gender         PetGender
   healthProblems String?
   allergies      String?
   additionalInfo String?
@@ -52,6 +52,25 @@ model Pet {
   groomings      Grooming[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
+}
+
+enum PetGender {
+  MACHO
+  FEMEA
+}
+
+enum PetSize {
+  PEQUENO
+  MEDIO
+  GRANDE
+}
+
+enum PetSpecie {
+  CACHORRO
+  GATO
+  PASSARO
+  PEIXE
+  REPTIL
 }
 
 model Service {
