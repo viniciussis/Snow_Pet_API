@@ -1,79 +1,121 @@
 import {
   Controller,
-  Get,
-  Post,
-  Body,
+  Delete,
   Patch,
   Param,
-  Delete,
+  Post,
+  Body,
+  Get,
 } from '@nestjs/common';
-import { CustomersService } from './customers.service';
 import {
   ApiCreatedResponse,
-  ApiNoContentResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { Prisma } from '@prisma/client';
+import { ResponseCustomerDto } from './dtos/resp-customer.dto';
+import { CreateCustomerDto } from './dtos/create-customer.dto';
+import { UpdateCustomerDto } from './dtos/update-customer.dto';
+import { CustomersService } from './customers.service';
 
 @ApiTags('Customers')
 @Controller('v1/customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
+  @ApiOperation({
+    summary: 'Busca clientes',
+    description: 'Faz uma busca que retorna um array de clientes...',
+  })
+  @ApiOkResponse({
+    description: 'Cliente encontrados!',
+    type: [ResponseCustomerDto],
+  })
   @Get()
-  @ApiOkResponse({ description: 'All the customers got successfully...' })
-  async getAllCustomers() {
+  async getAllCustomers(): Promise<ResponseCustomerDto[]> {
     const allCustomers = await this.customersService.getAllCustomers();
     return allCustomers;
   }
 
+  @ApiOperation({
+    summary: 'Busca um cliente',
+    description:
+      'Faz uma busca que retorna um cliente específico com base no ID passado como parâmetro...',
+  })
+  @ApiOkResponse({
+    description: 'Cliente encontrado!',
+    type: ResponseCustomerDto,
+  })
   @Get('/:id')
-  @ApiOkResponse({ description: 'Customer got successfully...' })
-  async getCustomer(@Param('id') id: string) {
+  async getCustomer(@Param('id') id: string): Promise<ResponseCustomerDto> {
     const customer = await this.customersService.getCustomerById(id);
     return customer;
   }
 
+  @ApiCreatedResponse({ description: 'Cliente criado com sucesso!' })
+  @ApiOperation({
+    summary: 'Cria um cliente',
+    description:
+      'Cria um cliente com base nos dados passados no corpo da requisição...',
+  })
   @Post()
-  @ApiCreatedResponse({ description: 'Customer created successfully...' })
-  async createCustomer(
-    @Body()
-    customerData: Omit<Prisma.CustomerCreateInput, 'address'> & {
-      address: Prisma.AddressCreateWithoutCustomerInput;
-    },
-  ) {
+  async createCustomer(@Body() customerData: CreateCustomerDto): Promise<{
+    customer: ResponseCustomerDto;
+    statusCode: number;
+    message: string;
+  }> {
     const newCustomer = await this.customersService.saveCustomer(customerData);
-    return newCustomer;
+    return {
+      statusCode: 201,
+      message: 'Cliente criado com sucesso!',
+      customer: newCustomer,
+    };
   }
 
+  @ApiOkResponse({ description: 'Cliente atualizado com sucesso!' })
+  @ApiOperation({
+    summary: 'Atualiza um cliente',
+    description:
+      'Atualiza um cliente com base no ID passado como parâmetro e dados passados no corpo da requisição...',
+  })
   @Patch('/:id')
-  @ApiOkResponse({ description: 'Customer created successfully...' })
   async updateCustomer(
     @Param('id') id: string,
     @Body()
-    dataToUpdate: Omit<Prisma.CustomerUpdateInput, 'address'> & {
-      address: Prisma.AddressUpdateWithoutCustomerInput;
-    },
-  ) {
+    data: UpdateCustomerDto,
+  ): Promise<{
+    statusCode: number;
+    message: string;
+    customer: ResponseCustomerDto;
+  }> {
     const customerUpdated = await this.customersService.updateCustomer(
       id,
-      dataToUpdate,
+      data,
     );
     return {
-      message: 'Customer successfully updated...',
+      statusCode: 200,
+      message: 'Cliente atualizado com sucesso!',
       customer: customerUpdated,
     };
   }
 
+  @ApiOkResponse({
+    description: 'Cliente deletado com sucesso!',
+  })
+  @ApiOperation({
+    summary: 'Exclui um cliente',
+    description: 'Exclui um cliente com base no ID passado como parâmetro...',
+  })
   @Delete('/:id')
-  @ApiNoContentResponse({ description: 'Customer deleted successfully...' })
-  async deleteCustomer(@Param('id') id: string) {
-    const customerDeleted = await this.customersService.removeCustomer(id);
+  async deleteCustomer(
+    @Param('id') id: string,
+  ): Promise<{ statusCode: number; message: string }> {
+    await this.customersService.removeCustomer(id);
 
     return {
-      message: 'Customer deleted successfully...',
-      customer: customerDeleted,
+      statusCode: 200,
+      message: 'Cliente deletado com sucesso!',
     };
   }
 }
+

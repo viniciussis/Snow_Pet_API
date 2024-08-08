@@ -1,4 +1,5 @@
 import { PrismaService } from 'src/plugins/database/services/database.service';
+import { UpdateCustomerDto } from './dtos/update-customer.dto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
@@ -41,20 +42,19 @@ export class CustomersService {
           create: customerData.address,
         },
       },
-      include: {
+      select: {
         address: true,
+        email: true,
+        name: true,
+        phoneNumber: true,
+        socialMedia: true,
       },
     });
 
     return newCustomer;
   }
 
-  async updateCustomer(
-    id: string,
-    dataToUpdate: Omit<Prisma.CustomerUpdateInput, 'address'> & {
-      address: Prisma.AddressUpdateWithoutCustomerInput;
-    },
-  ) {
+  async updateCustomer(id: string, dataToUpdate: UpdateCustomerDto) {
     const { address, ...data } = dataToUpdate;
 
     return await this.prisma.customer.update({
@@ -67,17 +67,27 @@ export class CustomersService {
           update: address,
         },
       },
+      select: {
+        address: true,
+        email: true,
+        name: true,
+        phoneNumber: true,
+        socialMedia: true,
+      },
     });
   }
 
   async removeCustomer(id: string) {
-    return await this.prisma.customer.delete({
+    await this.prisma.customer.delete({
       where: {
         id,
       },
       include: {
+        services: true,
         address: true,
+        pets: true,
       },
     });
   }
 }
+
