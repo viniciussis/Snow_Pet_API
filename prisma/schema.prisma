@@ -47,7 +47,7 @@ model Pet {
   allergies      String?
   additionalInfo String?
   combo          Boolean    @default(false)
-  owner          Customer   @relation(fields: [ownerId], references: [id])
+  owner          Customer   @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId        String     @db.ObjectId
   groomings      Grooming[]
   createdAt      DateTime   @default(now())

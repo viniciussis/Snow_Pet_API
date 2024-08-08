@@ -21,14 +21,22 @@ export class CategoriesService {
   }
 
   async getAllCategories() {
-    return await this.prisma.category.findMany({});
+    return await this.prisma.category.findMany({
+      select: {
+        label: true,
+        id: true,
+      },
+    });
   }
 
   async saveCategory(categoryData: Prisma.CategoryCreateInput) {
     const newCategory = await this.prisma.category.create({
       data: categoryData,
+      select: {
+        label: true,
+        id: true,
+      },
     });
-
     return newCategory;
   }
 
@@ -38,11 +46,15 @@ export class CategoriesService {
         id,
       },
       data: dataToUpdate,
+      select: {
+        label: true,
+        id: true,
+      },
     });
   }
 
   async removeCategory(id: string) {
-    return await this.prisma.category.delete({
+    await this.prisma.category.delete({
       where: {
         id,
       },

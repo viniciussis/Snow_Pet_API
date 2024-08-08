@@ -1,7 +1,7 @@
 import { PrismaService } from 'src/plugins/database/services/database.service';
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { UpdateGroomingDto } from './dtos/update-grooming.dto';
+import { CreateGroomingDto } from './dtos/create-grooming.dto';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GroomingsService {
@@ -20,12 +20,27 @@ export class GroomingsService {
   }
 
   async getAllGroomings() {
-    return await this.prisma.grooming.findMany({});
+    return await this.prisma.grooming.findMany({
+      select: {
+        date: true,
+        petId: true,
+        price: true,
+        type: true,
+        id: true,
+      },
+    });
   }
 
-  async saveGrooming(groomingData: Prisma.GroomingCreateInput) {
+  async saveGrooming(groomingData: CreateGroomingDto) {
     const newGrooming = await this.prisma.grooming.create({
       data: groomingData,
+      select: {
+        date: true,
+        petId: true,
+        price: true,
+        type: true,
+        id: true,
+      },
     });
 
     return newGrooming;
@@ -37,13 +52,23 @@ export class GroomingsService {
         id,
       },
       data: dataToUpdate,
+      select: {
+        date: true,
+        petId: true,
+        price: true,
+        type: true,
+        id: true,
+      },
     });
   }
 
   async removeGrooming(id: string) {
-    return await this.prisma.grooming.delete({
+    await this.prisma.grooming.delete({
       where: {
         id,
+      },
+      include: {
+        itemService: true,
       },
     });
   }

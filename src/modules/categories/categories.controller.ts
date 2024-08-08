@@ -1,75 +1,126 @@
 import {
   Controller,
-  Get,
-  Post,
-  Body,
+  Delete,
   Patch,
   Param,
-  Delete,
+  Post,
+  Body,
+  Get,
 } from '@nestjs/common';
 import {
-  ApiOkResponse,
-  ApiCreatedResponse,
   ApiNoContentResponse,
+  ApiCreatedResponse,
+  ApiOkResponse,
   ApiTags,
+  ApiOperation,
 } from '@nestjs/swagger';
 import { CategoriesService } from './categories.service';
 import { Prisma } from '@prisma/client';
+import { ResponseCategoryDto } from './dtos/resp-category.dto';
+import { CreateCategoryDto } from './dtos/create-category.dto';
+import { UpdateCategoryDto } from './dtos/update-category.dto';
 
 @ApiTags('Categories')
 @Controller('v1/categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @ApiOperation({
+    summary: 'Busca categorias',
+    description: 'Faz uma busca que retorna um array de categorias...',
+  })
+  @ApiOkResponse({
+    description: 'Categorias encontrados!',
+    type: [ResponseCategoryDto],
+  })
   @Get()
-  @ApiOkResponse({ description: 'All the categories got successfully...' })
-  async getAllCategories() {
+  async getAllCategories(): Promise<ResponseCategoryDto[]> {
     const allCategories = await this.categoriesService.getAllCategories();
     return allCategories;
   }
 
+  @ApiOperation({
+    summary: 'Busca uma categoria',
+    description:
+      'Faz uma busca que retorna uma categoria específico com base no ID passado como parâmetro...',
+  })
+  @ApiOkResponse({
+    description: 'Categoria encontrado!',
+    type: ResponseCategoryDto,
+  })
   @Get('/:id')
-  @ApiOkResponse({ description: 'Category got successfully...' })
-  async getCategory(@Param('id') id: string) {
+  async getCategory(@Param('id') id: string): Promise<ResponseCategoryDto> {
     const category = await this.categoriesService.getCategoryById(id);
     return category;
   }
 
+  @ApiCreatedResponse({ description: 'Categoria criada com sucesso!' })
+  @ApiOperation({
+    summary: 'Cria uma categoria',
+    description:
+      'Cria uma categoria com base nos dados passados no corpo da requisição...',
+  })
   @Post()
-  @ApiCreatedResponse({ description: 'Category created successfully...' })
   async createCategory(
     @Body()
-    categoryData: Prisma.CategoryCreateInput,
-  ) {
+    categoryData: CreateCategoryDto,
+  ): Promise<{
+    category: ResponseCategoryDto;
+    statusCode: number;
+    message: string;
+  }> {
     const newCategory = await this.categoriesService.saveCategory(categoryData);
-    return newCategory;
+    return {
+      statusCode: 201,
+      message: 'Categoria criada com sucesso!',
+      category: newCategory,
+    };
   }
 
+  @ApiOkResponse({ description: 'Categoria atualizada com sucesso!' })
+  @ApiOperation({
+    summary: 'Atualiza uma categoria',
+    description:
+      'Atualiza uma categoria com base no ID passado como parâmetro e dados passados no corpo da requisição...',
+  })
   @Patch('/:id')
-  @ApiOkResponse({ description: 'Category created successfully...' })
   async updateCategory(
     @Param('id') id: string,
     @Body()
-    dataToUpdate: Prisma.CategoryUpdateInput,
-  ) {
+    dataToUpdate: UpdateCategoryDto,
+  ): Promise<{
+    statusCode: number;
+    message: string;
+    category: ResponseCategoryDto;
+  }> {
     const categoryUpdated = await this.categoriesService.updateCategory(
       id,
       dataToUpdate,
     );
     return {
-      message: 'Category successfully updated...',
+      statusCode: 200,
+      message: 'Categoria atualizada com sucesso!',
       category: categoryUpdated,
     };
   }
 
+  @ApiOkResponse({
+    description: 'Categoria deletada com sucesso!',
+  })
+  @ApiOperation({
+    summary: 'Exclui uma categoria',
+    description:
+      'Exclui uma categoria com base no ID passado como parâmetro...',
+  })
   @Delete('/:id')
-  @ApiNoContentResponse({ description: 'Category deleted successfully...' })
-  async deleteCategory(@Param('id') id: string) {
-    const categoryDeleted = await this.categoriesService.removeCategory(id);
+  async deleteCategory(
+    @Param('id') id: string,
+  ): Promise<{ statusCode: number; message: string }> {
+    await this.categoriesService.removeCategory(id);
 
     return {
-      message: 'Category deleted successfully...',
-      category: categoryDeleted,
+      statusCode: 200,
+      message: 'Categoria deletada com sucesso!',
     };
   }
 }

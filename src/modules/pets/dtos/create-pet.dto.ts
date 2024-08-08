@@ -57,4 +57,3 @@ export class CreatePetDto {
   @ApiProperty()
   ownerId: string;
 }
-

@@ -20,7 +20,7 @@ export class CreateProductDto {
 
   @IsString({ message: 'A descrição tem que ser uma String' })
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   description?: string;
 
   @IsNumber({ maxDecimalPlaces: 2 }, { message: 'O preço deve ser um número.' })

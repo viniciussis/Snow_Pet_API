@@ -32,4 +32,3 @@ export class ResponseCustomerDto {
   @ApiProperty({ required: false, example: '@alexandre' })
   readonly socialMedia?: string;
 }
-

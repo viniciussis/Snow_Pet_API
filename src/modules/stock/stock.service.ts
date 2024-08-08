@@ -1,7 +1,6 @@
 import { PrismaService } from 'src/plugins/database/services/database.service';
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { UpdateStockDto } from './dtos/update-stock.dto';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class StockService {
@@ -24,8 +23,11 @@ export class StockService {
 
   async getAllStockProducts() {
     return await this.prisma.stock.findMany({
-      include: {
-        product: true,
+      select: {
+        productId: true,
+        date: true,
+        quantity: true,
+        id: true,
       },
     });
   }
@@ -36,19 +38,11 @@ export class StockService {
         id,
       },
       data: dataToUpdate,
-      include: {
-        product: true,
-      },
-    });
-  }
-
-  async removeStock(id: string) {
-    return await this.prisma.stock.delete({
-      where: {
-        id,
-      },
-      include: {
-        product: true,
+      select: {
+        productId: true,
+        date: true,
+        quantity: true,
+        id: true,
       },
     });
   }
