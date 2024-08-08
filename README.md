@@ -21,7 +21,7 @@ A **Snow Pet API** é uma API desenvolvida em NestJS para gerenciar as operaçõ
 
 ## Front-End
 
-- [Snow Pet Shop](github.com/viniciussis/snow_pet)
+- [Snow Pet Shop](https://github.com/viniciussis/Snow_Pet)
 
 ## Documentação da API
 
