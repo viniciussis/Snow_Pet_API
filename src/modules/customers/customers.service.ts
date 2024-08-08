@@ -2,6 +2,7 @@ import { PrismaService } from 'src/plugins/database/services/database.service';
 import { UpdateCustomerDto } from './dtos/update-customer.dto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { CreateCustomerDto } from './dtos/create-customer.dto';
 
 @Injectable()
 export class CustomersService {
@@ -30,11 +31,7 @@ export class CustomersService {
     });
   }
 
-  async saveCustomer(
-    customerData: Omit<Prisma.CustomerCreateInput, 'address'> & {
-      address: Prisma.AddressCreateWithoutCustomerInput;
-    },
-  ) {
+  async saveCustomer(customerData: CreateCustomerDto) {
     const newCustomer = await this.prisma.customer.create({
       data: {
         ...customerData,
@@ -90,4 +87,3 @@ export class CustomersService {
     });
   }
 }
-

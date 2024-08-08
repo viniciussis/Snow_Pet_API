@@ -1,8 +1,8 @@
 import { PrismaService } from 'src/plugins/database/services/database.service';
+import { CategoriesService } from '../categories/categories.service';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { Injectable } from '@nestjs/common';
-import { CategoriesService } from '../categories/categories.service';
 
 @Injectable()
 export class ProductsService {
@@ -24,7 +24,17 @@ export class ProductsService {
   }
 
   async getAllProducts() {
-    return await this.prisma.product.findMany({});
+    return await this.prisma.product.findMany({
+      select: {
+        id: true,
+        categoryId: true,
+        brand: true,
+        description: true,
+        measure: true,
+        name: true,
+        price: true,
+      },
+    });
   }
 
   async saveProduct(productData: CreateProductDto) {
@@ -38,8 +48,16 @@ export class ProductsService {
           },
         },
         stock: {
-          create: {}
-        }
+          create: {},
+        },
+      },
+      select: {
+        brand: true,
+        description: true,
+        measure: true,
+        name: true,
+        price: true,
+        category: true,
       },
     });
 
@@ -52,6 +70,14 @@ export class ProductsService {
         id,
       },
       data: dataToUpdate,
+      select: {
+        brand: true,
+        description: true,
+        measure: true,
+        name: true,
+        price: true,
+        category: true,
+      },
     });
   }
 
@@ -59,6 +85,9 @@ export class ProductsService {
     return await this.prisma.product.delete({
       where: {
         id,
+      },
+      include: {
+        stock: true,
       },
     });
   }

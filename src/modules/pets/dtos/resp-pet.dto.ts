@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PetGender, PetSize, PetSpecie } from '@prisma/client';
 
 export class ResponsePetDto {
+  @ApiProperty()
+  readonly id?: string;
+
   @ApiProperty({ example: 'Juca' })
   readonly name: string;
 
@@ -32,4 +35,3 @@ export class ResponsePetDto {
   @ApiProperty()
   readonly ownerId: string;
 }
-
