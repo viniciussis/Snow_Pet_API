@@ -25,8 +25,20 @@ export class CustomersService {
 
   async getAllCustomers() {
     return await this.prisma.customer.findMany({
-      include: {
-        address: true,
+      select: {
+        address: {
+          select: {
+            complement: true,
+            houseNumber: true,
+            street: true,
+            neighborhood: true,
+          },
+        },
+        email: true,
+        name: true,
+        phoneNumber: true,
+        socialMedia: true,
+        id: true,
       },
     });
   }
