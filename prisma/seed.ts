@@ -1,9 +1,38 @@
-import { PetGender, PetSize, PetSpecie, PrismaClient } from '@prisma/client';
+import {
+  PrismaClient,
+  PetGender,
+  PetSpecie,
+  PetSize,
+  Role,
+} from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const customerAndPet1 = await prisma.customer.upsert({
+  await prisma.user.createMany({
+    data: [
+      {
+        name: 'vini',
+        password: '123@mudar',
+        email: 'vini@example.com',
+        role: Role.ADMIN,
+      },
+      {
+        name: 'junin',
+        password: '123@mudar',
+        email: 'junin@example.com',
+        role: Role.EMPLOYEE,
+      },
+      {
+        name: 'pedrin',
+        password: '123@mudar',
+        email: 'pedrin@example.com',
+        role: Role.CUSTOMER,
+      },
+    ],
+  });
+
+  await prisma.customer.upsert({
     where: {
       id: '6682f3426607d34ad292fde0',
     },

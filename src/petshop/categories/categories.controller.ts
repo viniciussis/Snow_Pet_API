@@ -8,17 +8,15 @@ import {
   Get,
 } from '@nestjs/common';
 import {
-  ApiNoContentResponse,
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiTags,
   ApiOperation,
+  ApiTags,
 } from '@nestjs/swagger';
-import { CategoriesService } from './categories.service';
-import { Prisma } from '@prisma/client';
 import { ResponseCategoryDto } from './dtos/resp-category.dto';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { UpdateCategoryDto } from './dtos/update-category.dto';
+import { CategoriesService } from './categories.service';
 
 @ApiTags('Categories')
 @Controller('v1/categories')
@@ -124,3 +122,4 @@ export class CategoriesController {
     };
   }
 }
+
