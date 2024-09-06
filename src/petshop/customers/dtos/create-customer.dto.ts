@@ -66,4 +66,3 @@ export class CreateCustomerDto {
   @ApiProperty({ required: false })
   socialMedia?: string;
 }
-

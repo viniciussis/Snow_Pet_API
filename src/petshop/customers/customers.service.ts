@@ -1,8 +1,7 @@
 import { PrismaService } from 'src/plugins/database/services/database.service';
 import { UpdateCustomerDto } from './dtos/update-customer.dto';
-import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { CreateCustomerDto } from './dtos/create-customer.dto';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CustomersService {
