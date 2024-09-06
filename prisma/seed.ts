@@ -64,7 +64,7 @@ async function main() {
     },
   });
 
-  const customerAndPet2 = await prisma.customer.upsert({
+  await prisma.customer.upsert({
     where: {
       id: '6682da72b834f0f6a202da07',
     },
@@ -99,7 +99,7 @@ async function main() {
     },
   });
 
-  const customerAndPet3 = await prisma.customer.upsert({
+  await prisma.customer.upsert({
     where: {
       id: '6682eedf97a14c260c6c13d2',
     },
@@ -130,7 +130,7 @@ async function main() {
     },
   });
 
-  const grooming1 = await prisma.grooming.upsert({
+  await prisma.grooming.upsert({
     where: {
       id: '6682c5552a68fed0e844a1bb',
     },
@@ -147,7 +147,7 @@ async function main() {
     },
   });
 
-  const grooming2 = await prisma.grooming.upsert({
+  await prisma.grooming.upsert({
     where: {
       id: '6682d9748c0190bb253d35bd',
     },
@@ -164,7 +164,7 @@ async function main() {
     },
   });
 
-  const product1 = await prisma.product.create({
+  await prisma.product.create({
     data: {
       id: '6682d85c036beab771114da5',
       brand: 'Pets',
@@ -185,7 +185,7 @@ async function main() {
     },
   });
 
-  const product2 = await prisma.product.create({
+  await prisma.product.create({
     data: {
       id: '6682d90243fe59416b29403b',
       brand: 'Whiska',
@@ -207,7 +207,7 @@ async function main() {
     },
   });
 
-  const product3 = await prisma.product.create({
+  await prisma.product.create({
     data: {
       id: '6682ec92bb47312baa9a01d6',
       brand: 'Pedigree',
@@ -228,7 +228,7 @@ async function main() {
     },
   });
 
-  const service1 = await prisma.service.upsert({
+  await prisma.service.upsert({
     where: {
       id: '6687ecadfb742ab296412b41',
     },
@@ -262,7 +262,7 @@ async function main() {
     },
   });
 
-  const service2 = await prisma.service.upsert({
+  await prisma.service.upsert({
     where: {
       id: '6682efba7d971c9e16dae198',
     },
@@ -311,4 +311,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-
