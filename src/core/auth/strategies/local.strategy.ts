@@ -14,9 +14,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   async validate(email: string, password: string) {
     const user = await this.authService.validateUser(email, password);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: pass, ...rest } = user;
 
     return rest;
   }
 }
-

@@ -8,6 +8,7 @@ import { StockModule } from './petshop/stock/stock.module';
 import { PetsModule } from './petshop/pets/pets.module';
 import { UsersModule } from './core/users/users.module';
 import { AuthModule } from './core/auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 
 @Module({
@@ -22,7 +23,10 @@ import { Module } from '@nestjs/common';
     CategoriesModule,
     UsersModule,
     AuthModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
   ],
 })
 export class AppModule {}
-

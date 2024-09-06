@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
-import { IsAuthenticatedGuard } from './guards/is-authenticaded.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -10,13 +10,12 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-    return req.user;
+    return this.authService.login(req.user);
   }
 
-  @UseGuards(IsAuthenticatedGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('protected')
   getProtectedMessage(): string {
     return this.authService.getProtectedMessage();
   }
 }
-
