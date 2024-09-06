@@ -1,12 +1,27 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import * as session from 'express-session';
 import { AppModule } from './app.module';
+import * as passport from 'passport';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const APP_HOSTNAME = 'localhost';
   const HTTP_PORT = 3000;
+
+  app.use(
+    session({
+      secret: 'secret',
+      resave: false,
+      saveUninitialized: false,
+      cokkie: {
+        maxAge: 360000,
+      },
+    }),
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),

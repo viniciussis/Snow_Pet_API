@@ -164,12 +164,8 @@ async function main() {
     },
   });
 
-  const product1 = await prisma.product.upsert({
-    where: {
-      id: '6682d85c036beab771114da5',
-    },
-    update: {},
-    create: {
+  const product1 = await prisma.product.create({
+    data: {
       id: '6682d85c036beab771114da5',
       brand: 'Pets',
       measure: '250g',
@@ -189,12 +185,8 @@ async function main() {
     },
   });
 
-  const product2 = await prisma.product.upsert({
-    where: {
-      id: '6682d90243fe59416b29403b',
-    },
-    update: {},
-    create: {
+  const product2 = await prisma.product.create({
+    data: {
       id: '6682d90243fe59416b29403b',
       brand: 'Whiska',
       measure: '500g',
@@ -215,12 +207,8 @@ async function main() {
     },
   });
 
-  const product3 = await prisma.product.upsert({
-    where: {
-      id: '6682ec92bb47312baa9a01d6',
-    },
-    update: {},
-    create: {
+  const product3 = await prisma.product.create({
+    data: {
       id: '6682ec92bb47312baa9a01d6',
       brand: 'Pedigree',
       measure: '1kg',
