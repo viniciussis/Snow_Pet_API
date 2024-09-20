@@ -5,31 +5,38 @@ import {
   PetSize,
   Role,
 } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  const users = [
+    {
+      name: 'vini',
+      password: '123@mudar',
+      email: 'vini@example.com',
+      role: Role.ADMIN,
+    },
+    {
+      name: 'junin',
+      password: '123@mudar',
+      email: 'junin@example.com',
+      role: Role.EMPLOYEE,
+    },
+    {
+      name: 'pedrin',
+      password: '123@mudar',
+      email: 'pedrin@example.com',
+      role: Role.CUSTOMER,
+    },
+  ];
+
+  for (const user of users) {
+    user.password = await bcrypt.hash(user.password, 10);
+  }
+
   await prisma.user.createMany({
-    data: [
-      {
-        name: 'vini',
-        password: '123@mudar',
-        email: 'vini@example.com',
-        role: Role.ADMIN,
-      },
-      {
-        name: 'junin',
-        password: '123@mudar',
-        email: 'junin@example.com',
-        role: Role.EMPLOYEE,
-      },
-      {
-        name: 'pedrin',
-        password: '123@mudar',
-        email: 'pedrin@example.com',
-        role: Role.CUSTOMER,
-      },
-    ],
+    data: users,
   });
 
   await prisma.customer.upsert({

@@ -1,21 +1,19 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { Controller, Post, Request, UseGuards } from '@nestjs/common';
+import { LocalAuthGuard } from '../../common/guards';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { AuthRequest } from 'src/common/types';
 import { AuthService } from './auth.service';
+import { LocalAuthDto } from './dtos';
 
-@Controller('auth')
+@ApiTags('Authentication')
+@Controller('v1/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiBody({ type: LocalAuthDto })
   @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('protected')
-  getProtectedMessage(): string {
-    return this.authService.getProtectedMessage();
+  @Post('signin')
+  async signin(@Request() req: AuthRequest) {
+    return this.authService.signin(req.user);
   }
 }

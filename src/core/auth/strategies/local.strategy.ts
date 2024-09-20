@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { Strategy } from 'passport-local';
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy) {
+export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
   constructor(private readonly authService: AuthService) {
     super({
       usernameField: 'email',
@@ -14,9 +14,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   async validate(email: string, password: string) {
     const user = await this.authService.validateUser(email, password);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: pass, ...rest } = user;
-
-    return rest;
+    return {
+      user_id: user.id,
+      role: user.role,
+    };
   }
 }

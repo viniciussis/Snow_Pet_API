@@ -1,5 +1,4 @@
-import { LocalStrategy } from './strategies/local.strategy';
-import { JwtStrategy } from './strategies/jwt.strategy';
+import { AccessTokenStrategy, LocalStrategy } from './strategies';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
@@ -9,7 +8,7 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, AccessTokenStrategy, LocalStrategy],
   controllers: [AuthController],
   exports: [AuthService],
   imports: [
@@ -17,10 +16,10 @@ import { JwtModule } from '@nestjs/jwt';
     UsersModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>('ACCESS_TOKEN_SECRET'),
         signOptions: {
-          expiresIn: configService.get<string>('JWT_EXPIRATION_TIME'),
+          expiresIn: configService.get<string>('ACCESS_TOKEN_EXPIRATION'),
         },
       }),
     }),
