@@ -22,7 +22,6 @@ async function bootstrap() {
     .setTitle('Snow Pet API')
     .setDescription('An API for accessing the Snow Pet Database...')
     .setVersion('0.2.1')
-    .addTag('Módulos')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

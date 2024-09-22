@@ -9,6 +9,7 @@ import { UsersService } from '../users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { SignupDto } from './dtos';
 
 @Injectable()
 export class AuthService {
@@ -19,10 +20,34 @@ export class AuthService {
     private readonly prisma: PrismaService,
   ) {}
 
+  async signup(userData: SignupDto) {
+    const hashedPassword = await this.hashData(userData.password);
+
+    const user = await this.userService.createUser({
+      ...userData,
+      password: hashedPassword,
+    });
+
+    const { access_token, refresh_token } = await this.getTokens(user);
+
+    const hashedToken = await this.hashData(refresh_token);
+
+    await this.updateRefreshToken(user.email, hashedToken);
+
+    return {
+      access_token,
+      refresh_token,
+      role: user.role,
+      user_id: user.id,
+    };
+  }
+
   async signin(user: UserRequest) {
     const { access_token, refresh_token } = await this.getTokens(user);
 
-    await this.updateRefreshToken(user.email, refresh_token);
+    const hashedToken = await this.hashData(refresh_token);
+
+    await this.updateRefreshToken(user.email, hashedToken);
 
     return {
       access_token,
@@ -46,6 +71,10 @@ export class AuthService {
 
   async validateToken(email: string, refreshToken: string) {
     const user = await this.userService.findByEmail(email);
+
+    if (!user.refresh_token) {
+      throw new UnauthorizedException('Invalid refresh token!');
+    }
 
     const isMatch = await this._compareData(refreshToken, user.refresh_token);
 
@@ -79,20 +108,18 @@ export class AuthService {
     };
   }
 
-  async updateRefreshToken(email: string, refresh_token: string) {
-    const hashedToken = await this._hashData(refresh_token);
-
+  async updateRefreshToken(email: string, refresh_token: string | null) {
     await this.prisma.user.update({
       where: {
         email,
       },
       data: {
-        refresh_token: hashedToken,
+        refresh_token,
       },
     });
   }
 
-  private async _hashData(rawData: string) {
+  async hashData(rawData: string) {
     const SALT = await bcrypt.genSalt();
     return bcrypt.hash(rawData, SALT);
   }
