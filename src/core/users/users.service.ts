@@ -31,6 +31,7 @@ export class UsersService {
         email,
       },
       select: {
+        refresh_token: true,
         password: true,
         email: true,
         role: true,

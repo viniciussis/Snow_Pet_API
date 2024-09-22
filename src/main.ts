@@ -1,32 +1,22 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import * as cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
-import * as session from 'express-session';
 import { AppModule } from './app.module';
-import * as passport from 'passport';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const APP_HOSTNAME = 'localhost';
-  const HTTP_PORT = 3000;
 
-  app.use(
-    session({
-      secret: 'secret',
-      resave: false,
-      saveUninitialized: false,
-      cokkie: {
-        maxAge: 360000,
-      },
-    }),
-  );
-  app.use(passport.initialize());
-  app.use(passport.session());
+  const configService = app.get(ConfigService);
+  const APP_HOSTNAME = configService.get<string>('APP_HOSTNAME');
+  const HTTP_PORT = configService.get<number>('HTTP_PORT');
 
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
   app.enableCors();
+  app.use(cookieParser());
 
   const config = new DocumentBuilder()
     .setTitle('Snow Pet API')
