@@ -2,6 +2,8 @@ name: Create eCommerce API release
 
 on:
   push: 
+    branches: 
+      - main
     tags:   
       - '*'
 

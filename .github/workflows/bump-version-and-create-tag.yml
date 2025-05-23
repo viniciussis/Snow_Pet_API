@@ -41,7 +41,7 @@ jobs:
 
       - name: Bump version, commit, and tag
         run: |
-          npm version patch --tag-version-prefix=v -m "chore(release): bump version to %s [skip ci]"
+          npm version patch --tag-version-prefix=v -m "chore(release): bump version to %s"
 
       - name: Push changes
         run: |
