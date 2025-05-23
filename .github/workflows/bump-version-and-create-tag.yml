@@ -3,7 +3,7 @@ name: Test Versioning Workflow
 on:
   push:
     branches:
-      - initial-implementation
+      - main
 
 permissions:
   contents: write
