@@ -1,0 +1,29 @@
+name: Create eCommerce API release
+
+on:
+  push: 
+    tags:   
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Generate Release Note Placeholder
+        id: release_note
+        run: echo "notes=Released version ${{ github.ref_name }}. See the commit history for more details." >> $GITHUB_OUTPUT
+
+      - name: Create eCommerce Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: ${{ steps.release_note.outputs.notes }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
