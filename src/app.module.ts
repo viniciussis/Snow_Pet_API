@@ -14,6 +14,7 @@ import { Module } from '@nestjs/common';
 @Module({
   imports: [
     PrismaModule,
+    AuthModule,
     CustomersModule,
     PetsModule,
     ProductsModule,
@@ -22,7 +23,6 @@ import { Module } from '@nestjs/common';
     StockModule,
     CategoriesModule,
     UsersModule,
-    AuthModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
